@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Héctor Gómez Soria — Desarrollador Front-End</title>
+<meta name="description" content="Portfolio de Héctor Gómez Soria, desarrollador front-end especializado en aplicaciones híbridas y frontend web.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="sidenav" id="sidenav">
+  <div class="sidenav-top">
+    <span class="mark">HGS</span>
+  </div>
+  <ul class="sidenav-links">
+    <li><a href="#intro" class="active">Intro</a></li>
+    <li><a href="#experiencia">Experiencia</a></li>
+    <li><a href="#proyecto">Proyecto</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="sidenav-bottom">
+    <a href="mailto:hectorgomezsoria@gmail.com" aria-label="Email">✉</a>
+    <a href="https://www.linkedin.com/in/hectorgs19/" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
+    <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub">gh</a>
+  </div>
+</nav>
+
+<button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+  <span></span><span></span><span></span>
+</button>
+
+<main>
+
+  <section id="intro" class="section intro">
+    <div class="intro-grid">
+      <div class="intro-main">
+        <p class="eyebrow-plain">Desarrollador Front-End · León / remoto</p>
+        <h1>Héctor Gómez<br>Soria</h1>
+      </div>
+      <div class="intro-side">
+        <p>
+          Construyo interfaces y apps híbridas que la gente usa todos los días —
+          desde una app de hospitales privados en producción hasta paneles internos
+          con Angular. Me interesa el detalle: el bug que nadie más encuentra,
+          el componente que queda limpio a la primera.
+        </p>
+        <p class="intro-meta">
+          <span>5+ años de experiencia</span>
+          <span>·</span>
+          <span>Inglés B2</span>
+          <span>·</span>
+          <span>Disponible ahora</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="experiencia" class="section">
+    <h2>Experiencia</h2>
+    <ol class="timeline">
+      <li class="timeline-item">
+        <div class="timeline-date">2025 — 2026</div>
+        <div class="timeline-body">
+          <h3>Desarrollador Front-End · Divisa IT</h3>
+          <p>
+            App móvil híbrida para hospitales privados, en JavaScript vanilla
+            compilada con Apache Cordova. Resolución de bugs en producción,
+            nuevas funcionalidades y despliegue en iOS y Android.
+          </p>
+          <div class="tags">
+            <span>JavaScript</span><span>Cordova</span><span>Android Studio</span>
+          </div>
+        </div>
+      </li>
+      <li class="timeline-item">
+        <div class="timeline-date">2022 — 2025</div>
+        <div class="timeline-body">
+          <h3>Desarrollador Front-End · Smarkia</h3>
+          <p>
+            Interfaces, componentes y temas personalizados con ZK Framework y
+            Angular 17. Mantenimiento de la app móvil con Cordova, Vue y Quasar.
+          </p>
+          <div class="tags">
+            <span>Angular</span><span>Vue</span><span>Quasar</span><span>Java</span>
+          </div>
+        </div>
+      </li>
+      <li class="timeline-item">
+        <div class="timeline-date">2021 — 2022</div>
+        <div class="timeline-body">
+          <h3>Desarrollador Front-End · Capgemini</h3>
+          <p>
+            Desarrollo para el proyecto Mercadona y proyectos internos con
+            Angular, TypeScript y Sencha ExtJS. Back-end con Spring Boot.
+          </p>
+          <div class="tags">
+            <span>Angular</span><span>TypeScript</span><span>Spring Boot</span>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section id="proyecto" class="section proyecto">
+    <h2>Proyecto destacado</h2>
+    <div class="proyecto-card">
+      <div class="proyecto-info">
+        <p class="proyecto-status">En construcción</p>
+        <h3 id="proyecto-titulo">— Añade aquí el nombre del proyecto —</h3>
+        <p id="proyecto-desc">
+          Este espacio está pensado para tu próximo proyecto: algo que resuelva
+          un problema real, con código público y una demo funcionando. Sustituye
+          este texto por la descripción real en cuanto empieces a construirlo.
+        </p>
+        <div class="tags" id="proyecto-tags">
+          <span>Stack por definir</span>
+        </div>
+        <div class="proyecto-links">
+          <a href="#" class="btn-outline">Ver código →</a>
+          <a href="#" class="btn-outline">Ver demo →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack" class="section">
+    <h2>Stack</h2>
+    <div class="stack-grid">
+      <div class="stack-group">
+        <h4>Frontend</h4>
+        <p>JavaScript · TypeScript · Angular · Vue · HTML/CSS</p>
+      </div>
+      <div class="stack-group">
+        <h4>Móvil híbrido</h4>
+        <p>Cordova · Ionic · Android Studio</p>
+      </div>
+      <div class="stack-group">
+        <h4>Backend / apoyo</h4>
+        <p>Java · Spring Boot · SQL · PHP</p>
+      </div>
+      <div class="stack-group">
+        <h4>Herramientas</h4>
+        <p>Git · Jira · Jenkins · Postman</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto" class="section contacto">
+    <h2>Hablemos</h2>
+    <p>Disponible para nuevas oportunidades como desarrollador front-end.</p>
+    <a href="mailto:hectorgomezsoria@gmail.com" class="btn-main">hectorgomezsoria@gmail.com</a>
+    <div class="contacto-links">
+      <a href="https://www.linkedin.com/in/hectorgs19/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>Héctor Gómez Soria — 2026</p>
+  </footer>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
