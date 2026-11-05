@@ -105,7 +105,7 @@ h1, h2, h3, h4 {
 /* Main content */
 main {
   margin-left: var(--nav-width);
-  max-width: 760px;
+  max-width: 860px;
   padding: 0 48px;
 }
 
@@ -225,45 +225,62 @@ main {
   border-radius: 4px;
 }
 
-/* Featured project */
-.proyecto-card {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 32px;
-  background: var(--surface);
+/* Projects grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
 }
 
-.proyecto-status {
+.project-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  background: var(--surface);
+  transition: border-color 0.15s ease;
+}
+
+.project-card:hover {
+  border-color: var(--accent);
+}
+
+.project-status {
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--accent);
-  margin: 0 0 12px;
+  margin: 0 0 10px;
 }
 
-.proyecto-info h3 {
-  font-size: 22px;
-  margin-bottom: 12px;
+.project-card h3 {
+  font-size: 19px;
+  margin-bottom: 10px;
+}
+
+.project-desc {
   color: var(--text-dim);
+  font-size: 14.5px;
+  margin: 0 0 16px;
 }
 
-.proyecto-info p#proyecto-desc {
-  color: var(--text-dim);
-  font-size: 15px;
-  max-width: 56ch;
-  margin: 0 0 20px;
+.project-card .tags {
+  margin-bottom: 20px;
 }
 
-.proyecto-links {
+.project-links {
   display: flex;
-  gap: 12px;
-  margin-top: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
 }
 
 .btn-outline {
   font-family: var(--font-mono);
   font-size: 13px;
   border: 1px solid var(--border);
-  padding: 8px 16px;
+  padding: 7px 14px;
   border-radius: 6px;
   color: var(--text-dim);
   transition: border-color 0.15s ease, color 0.15s ease;
@@ -272,6 +289,16 @@ main {
 .btn-outline:hover {
   border-color: var(--accent);
   color: var(--accent);
+}
+
+.project-private {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.noscript-note {
+  color: var(--text-dim);
 }
 
 /* Stack */
@@ -384,6 +411,7 @@ a:focus-visible, button:focus-visible {
     gap: 6px;
   }
 
+  .projects-grid,
   .stack-grid {
     grid-template-columns: 1fr;
   }

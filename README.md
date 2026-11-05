@@ -1,51 +1,50 @@
 # Portfolio — Héctor Gómez Soria
 
-Web personal de un solo archivo, sin frameworks: HTML, CSS y JavaScript
-vanilla. Pensada para desplegarse gratis en GitHub Pages.
+Web personal sin frameworks: HTML, CSS y JavaScript vanilla, desplegada en
+GitHub Pages.
 
-**Demo:** _añade aquí el enlace en cuanto la despliegues_
+**Demo:** https://hectorgs19.github.io/
 
-## Por qué está hecha así
+## Cómo añadir un proyecto
 
-Está construida en vanilla JS a propósito: es el mismo enfoque que usé en
-producción para una app móvil de hospitales privados con Apache Cordova, y
-demuestra que no dependo de un framework para entregar algo cuidado,
-accesible y responsive.
+Los proyectos viven en `projects.js`. Para añadir uno, copia un bloque
+`{ ... }` de la lista `PROJECTS`, pégalo (con una coma al final del bloque
+anterior) y cambia los campos:
 
-## Características
-
-- Sin dependencias de build — abre `index.html` y funciona.
-- Responsive de escritorio a móvil, con menú lateral colapsable.
-- Respeta `prefers-reduced-motion` y tiene foco visible por teclado.
-- Sección de "proyecto destacado" lista para enlazar el próximo repo.
-
-## Desarrollo local
-
-No requiere instalación. Basta con abrir `index.html` en el navegador, o
-servirlo con:
-
-```bash
-python3 -m http.server 8000
+```js
+{
+  title: 'Nombre del proyecto',
+  description: 'Qué es y qué hiciste, en una o dos frases.',
+  tags: ['Angular', 'Ionic'],
+  status: 'En desarrollo',            // opcional
+  code: 'https://github.com/...',     // opcional
+  demo: 'https://...',                // opcional
+  private: true,                      // opcional: muestra "Código privado"
+},
 ```
 
-## Despliegue en GitHub Pages
-
-1. Sube este contenido a un repositorio público (p. ej. `tu-usuario.github.io`
-   para tu dominio raíz, o cualquier nombre si lo enlazas como proyecto).
-2. En **Settings → Pages**, elige la rama `main` y la carpeta raíz.
-3. En 1-2 minutos estará publicado en `https://tu-usuario.github.io/`.
+La web los muestra en una cuadrícula, en el orden de la lista. No hay que
+tocar el HTML ni el CSS.
 
 ## Estructura
 
 ```
 ├── index.html
 ├── styles.css
-├── script.js
+├── script.js      ← menú y generación de la cuadrícula
+├── projects.js    ← aquí se añaden los proyectos
 └── README.md
 ```
 
-## Personalización pendiente
+## Desarrollo local
 
-- [ ] Sustituir la sección "Proyecto destacado" por un proyecto real
-- [ ] Añadir enlace a GitHub Pages en este README
-- [ ] Revisar el enlace de GitHub en el menú (actualmente apunta a github.com)
+No requiere instalación: abre `index.html` en el navegador, o sírvelo con
+
+```bash
+python3 -m http.server 8000
+```
+
+## Despliegue
+
+Cualquier cambio que hagas `push` a la rama `main` se publica solo en
+GitHub Pages en 1-2 minutos.
