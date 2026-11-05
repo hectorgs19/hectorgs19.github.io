@@ -16,6 +16,13 @@
 */
 const PROJECTS = [
   {
+    title: 'El Gran Café León',
+    description:
+      'Web de la sala de conciertos y café El Gran Café León, hecha en WordPress: agenda de conciertos con venta de entradas, horarios, contacto y solicitud de eventos privados.',
+    tags: ['WordPress', 'Slider Revolution'],
+    demo: 'https://elgrancafeleon.es',
+  },
+  {
     title: 'Reforma',
     description:
       'App híbrida para gestionar las tareas de una mudanza o reforma por habitación, con foto hecha con la cámara y recordatorios locales.',
