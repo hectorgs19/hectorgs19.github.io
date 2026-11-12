@@ -1,6 +1,6 @@
 # Héctor Gómez Soria
 
-Desarrollador front-end. Construyo interfaces web e híbridas, desde apps
+Desarrollador de aplicaciones híbridas y web, en Gijón. Construyo interfaces web e híbridas, desde apps
 móviles en producción hasta paneles internos.
 
 Los últimos años he trabajado sobre todo con **JavaScript, Angular y Cordova**,
@@ -13,8 +13,8 @@ resolviendo bugs y añadiendo funcionalidades en un entorno de producción real.
 
 ## Ahora mismo
 
-Buscando mi próximo proyecto como desarrollador front-end. Abierto tanto a
-frontend web moderno como a desarrollo móvil híbrido.
+Buscando mi próximo proyecto como desarrollador de aplicaciones híbridas y web.
+Abierto tanto a frontend web moderno como a desarrollo móvil híbrido.
 
 ## Contacto
 
