@@ -656,3 +656,23 @@ a:focus-visible, button:focus-visible {
     height: 20px;
   }
 }
+
+/* Fondo atenuado del menú móvil: al tocarlo se cierra el menú */
+.nav-backdrop { display: none; }
+
+@media (max-width: 720px) {
+  .nav-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9;
+    background: rgba(6, 9, 12, 0.55);
+    opacity: 0;
+    pointer-events: none;
+    display: block;
+    transition: opacity 0.2s ease;
+  }
+  .sidenav.open + .nav-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

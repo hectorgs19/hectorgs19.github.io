@@ -28,16 +28,28 @@ themeButtons.forEach((btn) => {
 const navToggle = document.getElementById('navToggle');
 const sidenav = document.getElementById('sidenav');
 
+const navBackdrop = document.getElementById('navBackdrop');
+
+function setNav(open) {
+  sidenav.classList.toggle('open', open);
+  navToggle.setAttribute('aria-expanded', String(open));
+}
+
 navToggle.addEventListener('click', () => {
-  const isOpen = sidenav.classList.toggle('open');
-  navToggle.setAttribute('aria-expanded', String(isOpen));
+  setNav(!sidenav.classList.contains('open'));
 });
 
 sidenav.querySelectorAll('a').forEach((link) => {
-  link.addEventListener('click', () => {
-    sidenav.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
-  });
+  link.addEventListener('click', () => setNav(false));
+});
+
+// Cierra el menú al tocar fuera (fondo atenuado) o al pulsar Escape
+if (navBackdrop) navBackdrop.addEventListener('click', () => setNav(false));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && sidenav.classList.contains('open')) {
+    setNav(false);
+    navToggle.focus();
+  }
 });
 
 // Proyectos: genera las tarjetas a partir de PROJECTS (projects.js)
