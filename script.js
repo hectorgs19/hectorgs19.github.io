@@ -51,6 +51,13 @@ function renderProjects() {
     }
 
     const links = el('div', 'project-links');
+    if (project.details) {
+      const more = el('button', 'btn-outline btn-detail', 'Ver detalle');
+      more.type = 'button';
+      more.setAttribute('aria-haspopup', 'dialog');
+      more.addEventListener('click', () => openProjectDialog(project, more));
+      links.appendChild(more);
+    }
     if (project.code) links.appendChild(projectLink('Código →', project.code));
     if (project.demo) links.appendChild(projectLink('Demo →', project.demo));
     if (project.private) links.appendChild(el('span', 'project-private', 'Código privado'));
@@ -58,6 +65,97 @@ function renderProjects() {
 
     grid.appendChild(card);
   });
+}
+
+// Ventana de detalle de un proyecto (se abre sin salir del portfolio)
+let projectDialog = null;
+let lastTrigger = null;
+
+function buildProjectDialog() {
+  const dialog = el('dialog', 'project-dialog');
+  dialog.setAttribute('aria-labelledby', 'pdTitle');
+
+  const closeBtn = el('button', 'pd-close', '×');
+  closeBtn.type = 'button';
+  closeBtn.setAttribute('aria-label', 'Cerrar');
+  closeBtn.addEventListener('click', () => dialog.close());
+  dialog.appendChild(closeBtn);
+
+  const body = el('div', 'pd-body');
+  body.id = 'pdBody';
+  dialog.appendChild(body);
+
+  // Cierra al pulsar fuera de la ventana
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    // Vacía el contenido para detener el GIF y devuelve el foco al botón
+    body.replaceChildren();
+    document.documentElement.classList.remove('dialog-open');
+    if (lastTrigger) lastTrigger.focus();
+  });
+
+  document.body.appendChild(dialog);
+  return dialog;
+}
+
+function openProjectDialog(project, trigger) {
+  if (!projectDialog) projectDialog = buildProjectDialog();
+  lastTrigger = trigger;
+
+  const d = project.details;
+  const body = projectDialog.querySelector('#pdBody');
+  body.replaceChildren();
+
+  if (project.status) body.appendChild(el('p', 'project-status', project.status));
+  const title = el('h3', null, project.title);
+  title.id = 'pdTitle';
+  body.appendChild(title);
+  if (d.intro) body.appendChild(el('p', 'pd-intro', d.intro));
+
+  if (d.media && d.media.src) {
+    const fig = el('figure', 'pd-media');
+    const img = document.createElement('img');
+    img.src = d.media.src;
+    img.alt = d.media.alt || project.title;
+    img.decoding = 'async';
+    fig.appendChild(img);
+    if (d.media.caption) fig.appendChild(el('figcaption', null, d.media.caption));
+    body.appendChild(fig);
+  }
+
+  if (d.facts && d.facts.length) {
+    const dl = el('dl', 'pd-facts');
+    d.facts.forEach(([k, v]) => {
+      const row = el('div');
+      row.appendChild(el('dt', null, k));
+      row.appendChild(el('dd', null, v));
+      dl.appendChild(row);
+    });
+    body.appendChild(dl);
+  }
+
+  if (d.highlights && d.highlights.length) {
+    const list = el('ul', 'pd-highlights');
+    d.highlights.forEach((h) => {
+      const li = el('li');
+      li.appendChild(el('h4', null, h.title));
+      li.appendChild(el('p', null, h.text));
+      list.appendChild(li);
+    });
+    body.appendChild(list);
+  }
+
+  const actions = el('div', 'project-links pd-actions');
+  if (project.demo) actions.appendChild(projectLink('Visitar la web →', project.demo));
+  if (project.code) actions.appendChild(projectLink('Código →', project.code));
+  if (project.private) actions.appendChild(el('span', 'project-private', 'Código privado'));
+  body.appendChild(actions);
+
+  document.documentElement.classList.add('dialog-open');
+  projectDialog.showModal();
+  projectDialog.scrollTop = 0;
 }
 
 renderProjects();
