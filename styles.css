@@ -10,6 +10,19 @@
   --font-body: 'IBM Plex Sans', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
   --nav-width: 220px;
+  color-scheme: dark;
+}
+
+/* Tema claro */
+:root[data-theme="light"] {
+  --bg: #F5F7F8;
+  --surface: #FFFFFF;
+  --border: #D8DFE4;
+  --text: #14202A;
+  --text-dim: #52616C;
+  --accent: #1B7F76;
+  --accent-soft: rgba(27, 127, 118, 0.1);
+  color-scheme: light;
 }
 
 * { box-sizing: border-box; }
@@ -54,6 +67,8 @@ h1, h2, h3, h4 {
   flex-direction: column;
   justify-content: space-between;
   padding: 32px 24px;
+  gap: 24px;
+  overflow-y: auto;
   z-index: 10;
 }
 
@@ -90,13 +105,72 @@ h1, h2, h3, h4 {
 
 .sidenav-bottom {
   display: flex;
-  gap: 16px;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--text-dim);
+  flex-direction: column;
+  gap: 18px;
 }
 
-.sidenav-bottom a:hover { color: var(--accent); }
+.social-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.social-link,
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 10px;
+  margin-left: -10px;
+  border-radius: 8px;
+  color: var(--text-dim);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.2;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.social-link:hover,
+.theme-toggle:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  fill: currentColor;
+}
+
+.icon-stroke {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.theme-toggle {
+  border: 0;
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 8px 8px;
+  padding-top: 16px;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+/* Sol visible en oscuro (lleva a claro); luna visible en claro (lleva a oscuro) */
+.theme-toggle .icon-moon { display: none; }
+:root[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+:root[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+
+.theme-toggle--float { display: none; }
 
 .nav-toggle {
   display: none;
@@ -555,5 +629,30 @@ a:focus-visible, button:focus-visible {
   .projects-grid,
   .stack-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Botón de tema flotante (móvil) */
+@media (max-width: 720px) {
+  .theme-toggle--float {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 20;
+    width: 36px;
+    height: 36px;
+    margin: 0;
+    padding: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .theme-toggle--float .icon {
+    width: 20px;
+    height: 20px;
   }
 }

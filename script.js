@@ -1,3 +1,29 @@
+// Tema claro / oscuro (el tema inicial lo fija el script del <head>)
+const rootEl = document.documentElement;
+const themeButtons = document.querySelectorAll('.theme-toggle');
+
+function applyTheme(theme, save) {
+  rootEl.setAttribute('data-theme', theme);
+  if (save) {
+    try { localStorage.setItem('theme', theme); } catch (e) { /* sin almacenamiento */ }
+  }
+  const toLight = theme === 'dark';
+  const text = toLight ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+  themeButtons.forEach((btn) => {
+    btn.setAttribute('aria-label', text);
+    btn.title = text;
+    const label = btn.querySelector('.theme-label');
+    if (label) label.textContent = toLight ? 'Modo claro' : 'Modo oscuro';
+  });
+}
+
+applyTheme(rootEl.getAttribute('data-theme') === 'light' ? 'light' : 'dark', false);
+themeButtons.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    applyTheme(rootEl.getAttribute('data-theme') === 'light' ? 'dark' : 'light', true);
+  });
+});
+
 // Menú móvil
 const navToggle = document.getElementById('navToggle');
 const sidenav = document.getElementById('sidenav');
