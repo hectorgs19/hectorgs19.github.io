@@ -48,3 +48,10 @@ python3 -m http.server 8000
 
 Cualquier cambio que hagas `push` a la rama `main` se publica solo en
 GitHub Pages en 1-2 minutos.
+
+## Si no ves los cambios tras subir
+
+GitHub Pages guarda los archivos en caché unos minutos. `index.html` enlaza
+`styles.css`, `script.js` y `projects.js` con `?v=N`: cuando cambies alguno de
+los tres, sube también ese número (por ejemplo `?v=4`) para que todos los
+navegadores recojan la versión nueva a la vez.
