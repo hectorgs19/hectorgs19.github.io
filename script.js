@@ -1,3 +1,5 @@
+const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // Tema claro / oscuro (el tema inicial lo fija el script del <head>)
 const rootEl = document.documentElement;
 const themeButtons = document.querySelectorAll('.theme-toggle');
@@ -68,39 +70,67 @@ function projectLink(label, href) {
   return a;
 }
 
+function statusLabel(project) {
+  const p = el('p', 'project-status' + (project.live ? ' is-live' : ''));
+  if (project.live) p.appendChild(el('span', 'live-dot'));
+  p.appendChild(document.createTextNode(project.status));
+  return p;
+}
+
 function renderProjects() {
   const grid = document.getElementById('projectsGrid');
   if (!grid || typeof PROJECTS === 'undefined') return;
 
   PROJECTS.forEach((project) => {
-    const card = el('article', 'project-card');
+    const card = el('article', 'project-card reveal' + (project.featured ? ' project-card--featured' : ''));
+    let detailBtn = null;
 
-    if (project.status) {
-      card.appendChild(el('p', 'project-status', project.status));
+    if (project.featured && project.cover) {
+      const cover = el('button', 'project-cover');
+      cover.type = 'button';
+      cover.setAttribute('aria-label', 'Ver la demo de ' + project.title);
+      const img = document.createElement('img');
+      img.src = project.cover;
+      img.alt = '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      cover.appendChild(img);
+      cover.appendChild(el('span', 'project-cover-play', '▶ Ver demo'));
+      if (project.details) {
+        cover.addEventListener('click', () => openProjectDialog(project, cover));
+      } else {
+        cover.disabled = true;
+      }
+      card.appendChild(cover);
     }
 
-    card.appendChild(el('h3', null, project.title));
-    card.appendChild(el('p', 'project-desc', project.description));
+    const content = el('div', 'project-content');
+    if (project.status) content.appendChild(statusLabel(project));
+    content.appendChild(el('h3', null, project.title));
+    content.appendChild(el('p', 'project-desc', project.description));
 
     if (project.tags && project.tags.length) {
       const tags = el('div', 'tags');
       project.tags.forEach((t) => tags.appendChild(el('span', null, t)));
-      card.appendChild(tags);
+      content.appendChild(tags);
     }
 
     const links = el('div', 'project-links');
     if (project.details) {
-      const more = el('button', 'btn-outline btn-detail', 'Ver detalle');
-      more.type = 'button';
-      more.setAttribute('aria-haspopup', 'dialog');
-      more.addEventListener('click', () => openProjectDialog(project, more));
-      links.appendChild(more);
+      detailBtn = el('button', 'btn-outline btn-detail', 'Ver detalle');
+      detailBtn.type = 'button';
+      detailBtn.setAttribute('aria-haspopup', 'dialog');
+      detailBtn.addEventListener('click', () => openProjectDialog(project, detailBtn));
+      links.appendChild(detailBtn);
     }
-    if (project.code) links.appendChild(projectLink('Código →', project.code));
-    if (project.demo) links.appendChild(projectLink('Demo →', project.demo));
+    if (project.demo) {
+      links.appendChild(projectLink(project.featured && project.demoLabel ? project.demoLabel + ' ↗' : 'Demo ↗', project.demo));
+    }
+    if (project.code) links.appendChild(projectLink('Código ↗', project.code));
     if (project.private) links.appendChild(el('span', 'project-private', 'Código privado'));
-    if (links.children.length) card.appendChild(links);
+    if (links.children.length) content.appendChild(links);
 
+    card.appendChild(content);
     grid.appendChild(card);
   });
 }
@@ -128,7 +158,7 @@ function buildProjectDialog() {
     if (e.target === dialog) dialog.close();
   });
   dialog.addEventListener('close', () => {
-    // Vacía el contenido para detener el GIF y devuelve el foco al botón
+    // Vacía el contenido para detener el vídeo y devuelve el foco al botón
     body.replaceChildren();
     document.documentElement.classList.remove('dialog-open');
     if (lastTrigger) lastTrigger.focus();
@@ -146,19 +176,42 @@ function openProjectDialog(project, trigger) {
   const body = projectDialog.querySelector('#pdBody');
   body.replaceChildren();
 
-  if (project.status) body.appendChild(el('p', 'project-status', project.status));
+  if (project.status) body.appendChild(statusLabel(project));
   const title = el('h3', null, project.title);
   title.id = 'pdTitle';
   body.appendChild(title);
   if (d.intro) body.appendChild(el('p', 'pd-intro', d.intro));
 
-  if (d.media && d.media.src) {
+  if (d.media && (d.media.video || d.media.src)) {
     const fig = el('figure', 'pd-media');
-    const img = document.createElement('img');
-    img.src = d.media.src;
-    img.alt = d.media.alt || project.title;
-    img.decoding = 'async';
-    fig.appendChild(img);
+    let mediaEl;
+    if (d.media.video) {
+      mediaEl = document.createElement('video');
+      mediaEl.muted = true;
+      mediaEl.loop = true;
+      mediaEl.playsInline = true;
+      mediaEl.preload = 'auto';
+      if (d.media.poster) mediaEl.poster = d.media.poster;
+      mediaEl.setAttribute('aria-label', d.media.alt || project.title);
+      d.media.video.forEach((src) => {
+        const source = document.createElement('source');
+        source.src = src;
+        source.type = src.endsWith('.webm') ? 'video/webm' : 'video/mp4';
+        mediaEl.appendChild(source);
+      });
+      // Con «reducir movimiento» no arranca solo: se muestran los controles
+      if (reduceMotion) {
+        mediaEl.controls = true;
+      } else {
+        mediaEl.autoplay = true;
+      }
+    } else {
+      mediaEl = document.createElement('img');
+      mediaEl.src = d.media.src;
+      mediaEl.alt = d.media.alt || project.title;
+      mediaEl.decoding = 'async';
+    }
+    fig.appendChild(mediaEl);
     if (d.media.caption) fig.appendChild(el('figcaption', null, d.media.caption));
     body.appendChild(fig);
   }
@@ -186,8 +239,12 @@ function openProjectDialog(project, trigger) {
   }
 
   const actions = el('div', 'project-links pd-actions');
-  if (project.demo) actions.appendChild(projectLink('Visitar la web →', project.demo));
-  if (project.code) actions.appendChild(projectLink('Código →', project.code));
+  if (project.demo) {
+    const visit = projectLink('Visitar la web ↗', project.demo);
+    visit.className = 'btn-primary';
+    actions.appendChild(visit);
+  }
+  if (project.code) actions.appendChild(projectLink('Código ↗', project.code));
   if (project.private) actions.appendChild(el('span', 'project-private', 'Código privado'));
   body.appendChild(actions);
 
@@ -217,3 +274,23 @@ const observer = new IntersectionObserver(
 );
 
 sections.forEach((section) => observer.observe(section));
+
+// Aparición suave de los bloques al hacer scroll
+const revealEls = document.querySelectorAll('.reveal');
+if (reduceMotion || !('IntersectionObserver' in window)) {
+  revealEls.forEach((node) => node.classList.add('is-visible'));
+} else {
+  rootEl.classList.add('js-reveal');
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { rootMargin: '0px 0px -8% 0px' }
+  );
+  revealEls.forEach((node) => revealObserver.observe(node));
+}

@@ -20,6 +20,9 @@ anterior) y cambia los campos:
   code: 'https://github.com/...',     // opcional
   demo: 'https://...',                // opcional
   private: true,                      // opcional: muestra "Código privado"
+  live: true,                         // opcional: punto verde de "publicado"
+  featured: true,                     // opcional: tarjeta destacada a todo el ancho
+  cover: 'assets/portada.webp',       // imagen de la tarjeta destacada
 },
 ```
 
@@ -33,6 +36,7 @@ tocar el HTML ni el CSS.
 ├── styles.css
 ├── script.js      ← menú y generación de la cuadrícula
 ├── projects.js    ← aquí se añaden los proyectos
+├── assets/        ← demo en vídeo (webm + mp4), portada e imagen para redes
 └── README.md
 ```
 

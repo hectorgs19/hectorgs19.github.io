@@ -8,6 +8,9 @@
     description  Una o dos frases sobre qué es y qué hiciste (obligatorio)
     tags         Tecnologías, p. ej. ['Angular', 'Ionic']
     status       Etiqueta opcional, p. ej. 'En desarrollo'
+    live         true si está publicado (la etiqueta lleva un punto verde)
+    featured     true para mostrarlo destacado, a todo el ancho y con imagen
+    cover        Imagen de la tarjeta destacada, p. ej. 'assets/portada.webp'
     code         URL del repositorio (opcional)
     demo         URL de la demo en vivo (opcional)
     private      true si el código no es público (muestra "Código privado")
@@ -15,7 +18,9 @@
                  ventana sin salir del portfolio con:
                    intro       Párrafo de presentación
                    facts       [['Etiqueta', 'Valor'], ...]
-                   media       { src: 'assets/demo.gif', alt: 'Texto alternativo' }
+                   media       { video: ['assets/demo.webm', 'assets/demo.mp4'],
+                                 poster: 'assets/portada.webp', alt, caption }
+                               (o { src: 'assets/demo.gif', alt } para una imagen)
                    highlights  [{ title, text }, ...]
 
   Los proyectos se muestran en el orden en que aparecen aquí.
@@ -24,24 +29,29 @@ const PROJECTS = [
   {
     title: 'El Gran Café León',
     description:
-      'Nueva web de la sala de conciertos El Gran Café León, hecha desde cero sin WordPress: agenda pública, panel de administración propio y despliegue automático.',
+      'Web de la sala de conciertos El Gran Café León, hecha desde cero para sustituir a WordPress y ya publicada: agenda pública, panel de administración propio y despliegue automático. Un cliente real, en producción.',
     tags: ['JavaScript', 'PHP', 'HTML/CSS', 'GitHub Actions'],
-    status: 'Nueva versión en pruebas',
-    demo: 'https://nueva.elgrancafeleon.es',
+    status: 'En producción',
+    live: true,
+    featured: true,
+    cover: 'assets/gran-cafe-poster.webp',
+    demo: 'https://elgrancafeleon.es',
+    demoLabel: 'elgrancafeleon.es',
     private: true,
     details: {
       intro:
-        'La sala tenía su web en WordPress. La he sustituido por una web ligera hecha a medida, con una agenda pública y un panel privado desde el que se publican y editan los conciertos sin tocar código.',
+        'La sala tenía su web en WordPress. La he sustituido por una web ligera hecha a medida, ya publicada en su dominio, con una agenda pública y un panel privado desde el que el dueño publica y edita los conciertos sin tocar código.',
       media: {
-        src: 'assets/demo-gran-cafe.gif',
+        video: ['assets/demo-gran-cafe.webm', 'assets/demo-gran-cafe.mp4'],
+        poster: 'assets/gran-cafe-poster.webp',
         alt: 'Recorrido por la web: portada con carrusel de conciertos, ficha de un concierto, agenda por meses y panel de administración con el botón de estado de las entradas.',
         caption: 'Demo con conciertos de ejemplo · agenda pública y panel de administración',
       },
       facts: [
         ['Rol', 'Diseño y desarrollo completo, en solitario'],
+        ['Estado', 'En producción en elgrancafeleon.es'],
         ['Stack', 'JavaScript vanilla · PHP · HTML/CSS'],
         ['Alojamiento', 'Nominalia (solo PHP)'],
-        ['Código', 'Repositorio privado'],
       ],
       highlights: [
         {
